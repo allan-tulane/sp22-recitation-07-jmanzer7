@@ -34,7 +34,12 @@ def make_huffman_tree(f):
     # create a new node z with x and y as children,
     # insert z into the priority queue (using an empty character "")
     while (p.qsize() > 1):
-        # TODO
+        a = p.get()
+        b = p.get()
+        c = a.data[0] + b.data[0]
+        p.put(TreeNode(a, b, (c, "")))
+
+        return p.get()
         
     # return root of the tree
     return p.get()
@@ -47,12 +52,21 @@ def get_code(node, prefix="", code={}):
 # given an alphabet and frequencies, compute the cost of a fixed length encoding
 def fixed_length_cost(f):
     # TODO
-    pass
+    chars = len(f.keys())
+    length = math.ceil(math.log2(f))
+    fixed_length = 0
+    for i in f.values():
+      fixed_length = length + i
+    return fixed_length
 
 # given a Huffman encoding and character frequencies, compute cost of a Huffman encoding
 def huffman_cost(C, f):
     # TODO
-    pass
+    cost = 0
+    for i in f:
+      cost += len(C[i]) * f[i]
+    return cost
+      
 
 f = get_frequencies('f1.txt')
 print("Fixed-length cost:  %d" % fixed_length_cost(f))
